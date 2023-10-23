@@ -1,0 +1,57 @@
+.home {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    &__container {
+        width: 100%;
+        max-width: 1200px;
+
+        h1 {
+            font-weight: 500;
+            width: 100%;
+            text-align: center;
+            padding: 2rem 0.5rem;
+            color: rgb(15, 15, 15);
+        }
+
+        h4 {
+            font-weight: 500;
+            font-size: 1rem;
+        }
+
+        &--filters {
+            display: flex;
+            gap: 1rem;
+
+            padding: 0.6rem 0 1.6rem 0;
+            border-bottom: 1px solid rgb(245, 245, 245);
+
+            label {
+                font-size: 0.8rem;
+                font-weight: 400;
+            }
+
+            input, select {
+                padding: 0.7rem 1.2rem;
+                background: #F6F7F8;
+                border: none;
+                outline: none;
+                border-radius: 4rem;
+                font-size: 500;
+                transition: all 0.1s ease-in-out;
+                cursor: pointer;
+
+                &:hover {
+                    background: #008FA3;
+                    color: white;
+                    border-color: #008FA3;
+                }
+            }
+            select {
+                border-right: 0.8rem solid #F6F7F8;
+            }
+        }
+    }
+}

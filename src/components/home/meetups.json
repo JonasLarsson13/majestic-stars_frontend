@@ -1,0 +1,122 @@
+[
+    {
+        "date": "2024-12-08",
+        "startTime": "11:00",
+        "endTime": "12:00",
+        "title": "Lunch with Bob",
+        "description": "Meet with Bob for lunch at the diner.",
+        "location": "The Diner, Stockholm",
+        "image": "https://www.foodiesfeed.com/wp-content/uploads/2023/04/cheeseburger.jpg",
+        "tags": ["lunch", "bob", "diner"],
+        "amountAttendees": 27,
+        "host": "bob"
+    },
+    {
+        "date": "2024-12-14",
+        "startTime": "18:00",
+        "endTime": "20:00",
+        "title": "Dinner with Bob",
+        "description": "Meet with Bob for dinner at the diner.",
+        "location": "The Diner, Stockholm",
+        "image": "https://www.foodiesfeed.com/wp-content/uploads/2023/06/pouring-honey-on-pancakes.jpg",
+        "tags": ["dinner", "bob", "diner"],
+        "amountAttendees": 3,
+        "host": "bob"
+    },
+    {
+        "date": "2025-02-08",
+        "startTime": "11:00",
+        "endTime": "12:00",
+        "title": "Lunch with Bob",
+        "description": "Meet with Bob for lunch at the diner.",
+        "location": "The Diner, Stockholm",
+        "image": "https://www.foodiesfeed.com/wp-content/uploads/2023/05/freshly-prepared-beef-steak-with-vegetables.jpg",
+        "tags": ["lunch", "bob", "diner"],
+        "amountAttendees": 302,
+        "host": "bob"
+    },
+    {
+        "date": "2025-02-08",
+        "startTime": "11:00",
+        "endTime": "12:00",
+        "title": "Lunch with Bob",
+        "description": "Meet with Bob for lunch at the diner.",
+        "location": "The Diner, Stockholm",
+        "image": "https://www.foodiesfeed.com/wp-content/uploads/2023/05/freshly-prepared-beef-steak-with-vegetables.jpg",
+        "tags": ["lunch", "bob", "diner"],
+        "amountAttendees": 302,
+        "host": "bob"
+    },
+    {
+        "date": "2025-02-08",
+        "startTime": "11:00",
+        "endTime": "12:00",
+        "title": "Lunch with Bob",
+        "description": "Meet with Bob for lunch at the diner.",
+        "location": "The Diner, Stockholm",
+        "image": "https://www.foodiesfeed.com/wp-content/uploads/2023/05/freshly-prepared-beef-steak-with-vegetables.jpg",
+        "tags": ["lunch", "bob", "diner"],
+        "amountAttendees": 302,
+        "host": "bob"
+    },
+    {
+        "date": "2025-02-08",
+        "startTime": "11:00",
+        "endTime": "12:00",
+        "title": "Lunch with Bob",
+        "description": "Meet with Bob for lunch at the diner.",
+        "location": "The Diner, Stockholm",
+        "image": "https://www.foodiesfeed.com/wp-content/uploads/2023/05/freshly-prepared-beef-steak-with-vegetables.jpg",
+        "tags": ["lunch", "bob", "diner"],
+        "amountAttendees": 302,
+        "host": "bob"
+    },
+    {
+        "date": "2025-02-08",
+        "startTime": "11:00",
+        "endTime": "12:00",
+        "title": "Lunch with Bob",
+        "description": "Meet with Bob for lunch at the diner.",
+        "location": "The Diner, Stockholm",
+        "image": "https://www.foodiesfeed.com/wp-content/uploads/2023/05/freshly-prepared-beef-steak-with-vegetables.jpg",
+        "tags": ["lunch", "bob", "diner"],
+        "amountAttendees": 302,
+        "host": "bob"
+    },
+    {
+        "date": "2025-02-08",
+        "startTime": "11:00",
+        "endTime": "12:00",
+        "title": "Lunch with Bob",
+        "description": "Meet with Bob for lunch at the diner.",
+        "location": "The Diner, Stockholm",
+        "image": "https://www.foodiesfeed.com/wp-content/uploads/2023/05/freshly-prepared-beef-steak-with-vegetables.jpg",
+        "tags": ["lunch", "bob", "diner"],
+        "amountAttendees": 302,
+        "host": "bob"
+    },
+    {
+        "date": "2025-02-08",
+        "startTime": "11:00",
+        "endTime": "12:00",
+        "title": "Lunch with Bob",
+        "description": "Meet with Bob for lunch at the diner.",
+        "location": "The Diner, Stockholm",
+        "image": "https://www.foodiesfeed.com/wp-content/uploads/2023/05/freshly-prepared-beef-steak-with-vegetables.jpg",
+        "tags": ["lunch", "bob", "diner"],
+        "amountAttendees": 302,
+        "host": "bob"
+    },
+    {
+        "date": "2025-02-08",
+        "startTime": "11:00",
+        "endTime": "12:00",
+        "title": "Lunch with Bob",
+        "description": "Meet with Bob for lunch at the diner.",
+        "location": "The Diner, Stockholm",
+        "image": "https://www.foodiesfeed.com/wp-content/uploads/2023/05/freshly-prepared-beef-steak-with-vegetables.jpg",
+        "tags": ["lunch", "bob", "diner"],
+        "amountAttendees": 302,
+        "host": "bob"
+    }
+]

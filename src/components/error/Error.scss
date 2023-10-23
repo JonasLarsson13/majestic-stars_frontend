@@ -1,0 +1,23 @@
+.error {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem 1rem;
+    gap: 0.5rem;
+
+    h1 {
+        font-weight: 500;
+    }
+
+    h2 {
+        font-weight: 400;
+    }
+
+    a {
+        text-decoration: none;
+        color: #F65858;
+        font-weight: 500;
+    }
+}
