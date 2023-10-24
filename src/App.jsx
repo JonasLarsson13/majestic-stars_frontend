@@ -18,7 +18,10 @@ function App() {
         setShowSignupPopup={setShowSignupPopup}
       />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route
+          path="/"
+          element={<Home setShowLoginPopup={setShowLoginPopup} />}
+        />
         <Route path="/*" element={<Error />} />
       </Routes>
       <Popup

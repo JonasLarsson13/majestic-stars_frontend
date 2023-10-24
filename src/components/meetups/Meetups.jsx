@@ -4,7 +4,7 @@ import { GoShare } from "react-icons/go";
 import "./Meetups.scss";
 
 const Meetups = (props) => {
-  const { meetup } = props;
+  const { meetup, setShowLoginPopup } = props;
   return (
     <div className="meetup">
       <img src={meetup.image} alt={meetup.title} />
@@ -20,7 +20,7 @@ const Meetups = (props) => {
         <div className="meetup__info--bottom">
           <span>{meetup.amountAttendees} attendees</span>
           <div>
-            <button>Attend</button>
+            <button onClick={() => setShowLoginPopup(true)}>Attend</button>
             <button>
               <GoShare />
             </button>
