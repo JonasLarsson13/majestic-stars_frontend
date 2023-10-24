@@ -3,7 +3,7 @@ import { FiSearch } from "react-icons/fi";
 
 import "./Navbar.scss";
 
-const Navbar = () => {
+const Navbar = ({ setShowLoginPopup, setShowSignupPopup }) => {
   return (
     <div className="navbar">
       <div className="navbar__left">
@@ -17,8 +17,8 @@ const Navbar = () => {
         </div>
       </div>
       <ul className="navbar__right">
-        <li>Login</li>
-        <li>Sign up</li>
+        <li onClick={() => setShowLoginPopup(true)}>Login</li>
+        <li onClick={() => setShowSignupPopup(true)}>Sign up</li>
       </ul>
     </div>
   );

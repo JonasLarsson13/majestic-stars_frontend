@@ -1,0 +1,73 @@
+.popup {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    background: rgba(0, 0, 0, 0.5);
+    pointer-events: none;
+    transition: all 0.2s ease-in-out;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &.active {
+        opacity: 1;
+        pointer-events: all;
+    }
+
+    &__content {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        gap: 0.5rem;
+        width: 100%;
+        height: auto;
+        padding: 1.6rem 4rem;
+        background: white;
+        border-radius: 8px;
+        transition: all 0.3s ease-in-out;
+        transition-delay: 0.2s;
+        transform: translateY(20px);
+        opacity: 0;
+
+        &.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        h1 {
+            font-size: 1.4rem;
+            font-weight: 500;
+        }
+
+        p {
+            font-size: 0.9rem;
+
+            span {
+                color: #008FA3;
+                cursor: pointer;
+            }
+        }
+
+        figure {
+            position: absolute;
+            top: 0.6rem;
+            right: 0.6rem;
+            font-size: 1rem;
+            width: 100%;
+            display: flex;
+            justify-content: flex-end;
+
+            svg {
+                width: 1rem;
+                height: 1rem;
+                cursor: pointer;
+            }
+        }
+    }
+}

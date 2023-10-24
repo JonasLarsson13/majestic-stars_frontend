@@ -1,3 +1,60 @@
 .app {
     width: 100%;
 }
+
+.mini-logo {
+    font-size: 18px;
+    font-weight: 100;
+    font-family: 'Dancing Script', cursive;
+}
+
+.popup__form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 1rem;
+    padding-top: 2rem;
+
+    .form__group {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        gap: 0.3rem;
+
+        label {
+            font-size: 0.8rem;
+            font-weight: 400;
+        }
+
+        input {
+            width: 100%;
+            padding: 0.5rem 0.8rem;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            outline: none;
+            transition: all 0.1s ease-in-out;
+
+            &:hover, &:focus-within {
+                border-color: #008FA3;
+            }
+        }
+    }
+    button {
+        width: 100%;
+        padding: 0.5rem 0.8rem;
+        font-size: 1rem;
+        font-weight: 500;
+        color: white;
+        background: #F65858;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        border-radius: 6px;
+        transition: all 0.1s ease-in-out;
+        margin-top: 1rem;
+
+        &:hover {
+            background: #ff6868;
+        }
+    }
+}
