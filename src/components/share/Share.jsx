@@ -8,7 +8,7 @@ import {
 } from "react-icons/ai";
 import { BsPinterest } from "react-icons/bs";
 
-import "./share.scss";
+import "./Share.scss";
 
 const Share = (props) => {
   const { description, url } = props;
