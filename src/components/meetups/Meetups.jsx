@@ -1,10 +1,12 @@
+
 import React from "react";
 import { GoShare } from "react-icons/go";
-
+import { useNavigate } from "react-router-dom"; 
 import "./Meetups.scss";
 
 const Meetups = (props) => {
   const { meetup, setShowLoginPopup, setShowSharePopup, setShareInfo } = props;
+
   const onShareClick = () => {
     setShareInfo({
       description: meetup.title,
@@ -12,6 +14,14 @@ const Meetups = (props) => {
     });
     setShowSharePopup(true);
   };
+
+  const navigate = useNavigate(); // Use useNavigate to handle navigation
+
+  const handleViewDetails = () => {
+    // Navigate to the new route with the meetup ID as a parameter
+    navigate(`/meetup/${meetup.id}`);
+  };
+
   return (
     <div className="meetup">
       <img src={meetup.image} alt={meetup.title} />
@@ -24,6 +34,9 @@ const Meetups = (props) => {
           <p>{meetup.description}</p>
           <span>{meetup.location}</span>
         </div>
+        
+        <button onClick={handleViewDetails}>View Details</button>
+
         <div className="meetup__info--bottom">
           <span>{meetup.amountAttendees} attendees</span>
           <div>
@@ -39,3 +52,4 @@ const Meetups = (props) => {
 };
 
 export default Meetups;
+
