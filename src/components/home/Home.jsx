@@ -1,10 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
+import Popup from "../popup/Popup";
 
 import "./Home.scss";
 import meetups from "./meetups.json";
 import Meetups from "../meetups/Meetups";
+import Share from "../share/Share";
 
 const Home = ({ setShowLoginPopup }) => {
+  const [showSharePopup, setShowSharePopup] = useState(false);
+  const [shareInfo, setShareInfo] = useState({
+    description: "",
+    url: "",
+  });
   return (
     <div className="home">
       <div className="home__container">
@@ -42,10 +49,19 @@ const Home = ({ setShowLoginPopup }) => {
               meetup={meetup}
               key={index}
               setShowLoginPopup={setShowLoginPopup}
+              setShowSharePopup={setShowSharePopup}
+              setShareInfo={setShareInfo}
             />
           ))}
         </div>
       </div>
+      <Popup
+        showPopup={showSharePopup}
+        setShowPopup={setShowSharePopup}
+        width={360}
+      >
+        <Share description={shareInfo.description} url={shareInfo.url} />
+      </Popup>
     </div>
   );
 };
