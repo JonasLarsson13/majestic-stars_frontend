@@ -1,30 +1,35 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getMeetups } from "../../actions/meetupsActions";
 import Popup from "../popup/Popup";
 
 import "./Home.scss";
-import meetups from "./meetups.json";
 import Meetups from "../meetups/Meetups";
 import Share from "../share/Share";
 
 import SelectedMeetup from "../selectedMeetup/selectedMeetup";
 
-
 const Home = ({ setShowLoginPopup }) => {
+  const dispatch = useDispatch();
+  const { isMeetupLoading, meetups } = useSelector((state) => state.meetup);
   const [showSharePopup, setShowSharePopup] = useState(false);
   const [shareInfo, setShareInfo] = useState({
     description: "",
     url: "",
   });
 
-   // State for selected meetup
-   const [selectedMeetup, setSelectedMeetup] = useState(null);
+  // State for selected meetup
+  const [selectedMeetup, setSelectedMeetup] = useState(null);
 
-   // Function to open the meetup details
-   const openSelectedMeetup = (meetup) => {
-     setSelectedMeetup(meetup);
-   };
+  // Function to open the meetup details
+  const openSelectedMeetup = (meetup) => {
+    setSelectedMeetup(meetup);
+  };
 
-   
+  useEffect(() => {
+    dispatch(getMeetups());
+  }, []);
+
   return (
     <div className="home">
       <div className="home__container">
@@ -64,7 +69,6 @@ const Home = ({ setShowLoginPopup }) => {
               setShowLoginPopup={setShowLoginPopup}
               setShowSharePopup={setShowSharePopup}
               setShareInfo={setShareInfo}
-
               //Pass the function to open the meetup details
               openSelectedMeetup={openSelectedMeetup}
             />
@@ -72,8 +76,8 @@ const Home = ({ setShowLoginPopup }) => {
         </div>
       </div>
 
-       {/* Render the SelectedMeetup component if a meetup is selected */}
-       {selectedMeetup && <SelectedMeetup meetup={selectedMeetup} />}
+      {/* Render the SelectedMeetup component if a meetup is selected */}
+      {selectedMeetup && <SelectedMeetup meetup={selectedMeetup} />}
 
       <Popup
         showPopup={showSharePopup}

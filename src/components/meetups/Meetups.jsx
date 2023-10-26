@@ -1,7 +1,7 @@
-
 import React from "react";
+import { format } from "date-fns";
 import { GoShare } from "react-icons/go";
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
 import "./Meetups.scss";
 
 const Meetups = (props) => {
@@ -22,23 +22,32 @@ const Meetups = (props) => {
     navigate(`/meetup/${meetup.id}`);
   };
 
+  const currentTime = new Date(meetup.startDate);
+
   return (
     <div className="meetup">
       <img src={meetup.image} alt={meetup.title} />
       <div className="meetup__info">
         <div className="meetup__info--top">
           <h4>
-            {meetup.date} • {meetup.startTime}
+            {format(
+              currentTime.setHours(currentTime.getHours() - 1),
+              "do MMMM yyyy, HH:mm"
+            )}{" "}
+            • {meetup.city}
           </h4>
           <h3>{meetup.title}</h3>
           <p>{meetup.description}</p>
           <span>{meetup.location}</span>
         </div>
-        
+
         <button onClick={handleViewDetails}>View Details</button>
 
         <div className="meetup__info--bottom">
-          <span>{meetup.amountAttendees} attendees</span>
+          <span>
+            {meetup.participants} attendees •{" "}
+            {meetup.capacity - meetup.participants} slots left
+          </span>
           <div>
             <button onClick={() => setShowLoginPopup(true)}>Attend</button>
             <button onClick={onShareClick}>
@@ -52,4 +61,3 @@ const Meetups = (props) => {
 };
 
 export default Meetups;
-
