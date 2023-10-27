@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -11,6 +11,7 @@ import Popup from "./components/popup/Popup";
 
 import SelectedMeetup from "./components/selectedMeetup/selectedMeetup";
 import { login, register } from "./actions/authActions";
+import Footer from "./components/shared/footer/Footer";
 
 function App() {
   const dispatch = useDispatch();
@@ -29,6 +30,8 @@ function App() {
   });
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchText, setSearchText] = useState("");
 
   /* useEffect(() => {
     // Simulate loading, and then set isLoading to false
@@ -107,11 +110,19 @@ function App() {
       <Navbar
         setShowLoginPopup={setShowLoginPopup}
         setShowSignupPopup={setShowSignupPopup}
+        setSearchQuery={setSearchQuery}
+        searchText={searchText}
+        setSearchText={setSearchText}
       />
       <Routes>
         <Route
           path="/"
-          element={<Home setShowLoginPopup={setShowLoginPopup} />}
+          element={
+            <Home
+              setShowLoginPopup={setShowLoginPopup}
+              searchQuery={searchQuery}
+            />
+          }
         />
         <Route path="/*" element={<Error />} />
         <Route path="/meetup/:meetupId" element={<SelectedMeetup />} />
@@ -248,6 +259,7 @@ function App() {
           </button>
         </div>
       </Popup>
+      <Footer />
     </div>
   );
 }

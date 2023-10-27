@@ -18,8 +18,7 @@ const Meetups = (props) => {
   const navigate = useNavigate(); // Use useNavigate to handle navigation
 
   const handleViewDetails = () => {
-    // Navigate to the new route with the meetup ID as a parameter
-    navigate(`/meetup/${meetup.id}`);
+    navigate(`/meetup/${meetup._id}`);
   };
 
   const currentTime = new Date(meetup.startDate);
@@ -36,13 +35,12 @@ const Meetups = (props) => {
             )}{" "}
             • {meetup.city}
           </h4>
-          <h3>{meetup.title}</h3>
-          <p>{meetup.description}</p>
+          <h3 onClick={handleViewDetails}>{meetup.title}</h3>
+          <p onClick={handleViewDetails}>
+            {meetup.description.substring(0, 180).replace(/<br\s*\/>/g, "")} ...
+          </p>
           <span>{meetup.location}</span>
         </div>
-
-        <button onClick={handleViewDetails}>View Details</button>
-
         <div className="meetup__info--bottom">
           <span>
             {meetup.participants} attendees •{" "}

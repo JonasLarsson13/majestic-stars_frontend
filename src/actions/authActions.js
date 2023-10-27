@@ -6,7 +6,6 @@ export const login =
     try {
       dispatch({ type: "START_LOADING" });
       const { data } = await api.loginUser(formData);
-      console.log(data);
       if (data.statusCode === 401) {
         setErrorMessage("Invalid credentials");
       } else {

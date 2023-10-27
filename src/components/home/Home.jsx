@@ -1,83 +1,171 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getMeetups } from "../../actions/meetupsActions";
+import { filterMeetups, getMeetups } from "../../actions/meetupsActions";
 import Popup from "../popup/Popup";
 
 import "./Home.scss";
 import Meetups from "../meetups/Meetups";
 import Share from "../share/Share";
 
-import SelectedMeetup from "../selectedMeetup/selectedMeetup";
-
-const Home = ({ setShowLoginPopup }) => {
+const Home = ({ setShowLoginPopup, searchQuery }) => {
   const dispatch = useDispatch();
-  const { isMeetupLoading, meetups } = useSelector((state) => state.meetup);
+  const { isMeetupLoading, meetups, meetupsFilters } = useSelector(
+    (state) => state.meetup
+  );
   const [showSharePopup, setShowSharePopup] = useState(false);
   const [shareInfo, setShareInfo] = useState({
     description: "",
     url: "",
   });
-
-  // State for selected meetup
-  const [selectedMeetup, setSelectedMeetup] = useState(null);
-
-  // Function to open the meetup details
-  const openSelectedMeetup = (meetup) => {
-    setSelectedMeetup(meetup);
-  };
+  const [filters, setFilters] = useState({
+    fromDate: "",
+    toDate: "",
+    city: "",
+    category: "",
+  });
+  const [uniqueFilters, setUniqueFilters] = useState({
+    city: [],
+    category: [],
+  });
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     dispatch(getMeetups());
   }, []);
 
+  useEffect(() => {
+    setUniqueFilters({
+      city: [],
+      category: [],
+    });
+    if (meetupsFilters.city || meetupsFilters.category) {
+      setUniqueFilters({
+        category: [...new Set(meetupsFilters.category)],
+        city: [...new Set(meetupsFilters.city)],
+      });
+    }
+  }, [meetupsFilters]);
+
+  useEffect(() => {
+    if (filters.toDate) {
+      if (filters.fromDate > filters.toDate) {
+        setErrorMessage("From date cannot be greater than to date");
+        setTimeout(() => setErrorMessage(""), 4000);
+        setFilters({ ...filters, toDate: "" });
+      }
+    }
+    if (
+      filters.fromDate ||
+      filters.toDate ||
+      filters.city ||
+      filters.category
+    ) {
+      if (filters.fromDate <= filters.toDate) {
+        dispatch(filterMeetups(filters));
+      }
+    } else if (
+      !filters.fromDate &&
+      !filters.toDate &&
+      !filters.city &&
+      !filters.category
+    ) {
+      dispatch(getMeetups());
+    }
+  }, [filters]);
+
   return (
     <div className="home">
       <div className="home__container">
         <div className="home__container--filters">
-          <h1>Available meetups</h1>
-          <h4>Filters</h4>
-          <div className="filter-container">
-            <div className="filters__date">
-              <label>Date: </label> <input type="date" /> -{" "}
-              <input type="date" />
-            </div>
-            <div className="filters__location">
-              <select name="location" id="location">
-                <option value="all">Any location</option>
-                <option value="Stockholm">Stockholm</option>
-                <option value="Gothenburg">Gothenburg</option>
-                <option value="Malmö">Malmö</option>
-                <option value="Uppsala">Uppsala</option>
-              </select>
-            </div>
-            <div className="filters__category">
-              <select name="category" id="category">
-                <option value="all">Any category</option>
-                <option value="Music">Music</option>
-                <option value="Food">Food</option>
-                <option value="Sports">Sports</option>
-                <option value="Tech">Tech</option>
-              </select>
-            </div>
-          </div>
+          <h1>{searchQuery ? "Search meetups" : "Available meetups"}</h1>
+          {searchQuery && (
+            <h4 style={{ width: "100%", textAlign: "center" }}>
+              {searchQuery}
+            </h4>
+          )}
+          {!searchQuery && (
+            <>
+              <h4>Filters</h4>
+              <div className="filter-container">
+                <div className="filters__date">
+                  <label>Date: </label>{" "}
+                  <input
+                    type="date"
+                    value={filters.fromDate}
+                    onChange={(e) =>
+                      setFilters({ ...filters, fromDate: e.target.value })
+                    }
+                  />{" "}
+                  -{" "}
+                  <input
+                    type="date"
+                    value={filters.toDate}
+                    onChange={(e) =>
+                      setFilters({ ...filters, toDate: e.target.value })
+                    }
+                  />
+                </div>
+                {errorMessage && <p className="error">{errorMessage}</p>}
+                <div className="filters__location">
+                  <select
+                    name="location"
+                    id="location"
+                    value={filters.city}
+                    onChange={(e) =>
+                      setFilters({ ...filters, city: e.target.value })
+                    }
+                  >
+                    <option value="" disabled={!uniqueFilters.city}>
+                      Any city
+                    </option>
+                    {uniqueFilters.city.length > 0 &&
+                      uniqueFilters.city?.map((city, index) => (
+                        <option key={index} value={city}>
+                          {city}
+                        </option>
+                      ))}
+                  </select>
+                </div>
+                <div className="filters__category">
+                  <select
+                    name="category"
+                    id="category"
+                    value={filters.category}
+                    onChange={(e) =>
+                      setFilters({ ...filters, category: e.target.value })
+                    }
+                  >
+                    <option value="">Any category</option>
+                    {uniqueFilters.category.length > 0 &&
+                      uniqueFilters.category?.map((category, index) => (
+                        <option key={index} value={category}>
+                          {category}
+                        </option>
+                      ))}
+                  </select>
+                </div>
+              </div>
+            </>
+          )}
         </div>
         <div className="home__container--meetups">
-          {meetups.map((meetup, index) => (
-            <Meetups
-              meetup={meetup}
-              key={index}
-              setShowLoginPopup={setShowLoginPopup}
-              setShowSharePopup={setShowSharePopup}
-              setShareInfo={setShareInfo}
-              //Pass the function to open the meetup details
-              openSelectedMeetup={openSelectedMeetup}
-            />
-          ))}
+          {isMeetupLoading ? (
+            <h3>Loading meetups...</h3>
+          ) : meetups.length > 0 ? (
+            meetups.map((meetup, index) => (
+              <Meetups
+                meetup={meetup}
+                key={index}
+                setShowLoginPopup={setShowLoginPopup}
+                setShowSharePopup={setShowSharePopup}
+                setShareInfo={setShareInfo}
+              />
+            ))
+          ) : (
+            <h3>No meetups found</h3>
+          )}
         </div>
       </div>
-
-      {/* Render the SelectedMeetup component if a meetup is selected */}
-      {selectedMeetup && <SelectedMeetup meetup={selectedMeetup} />}
 
       <Popup
         showPopup={showSharePopup}
