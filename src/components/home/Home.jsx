@@ -6,6 +6,7 @@ import Popup from "../popup/Popup";
 import "./Home.scss";
 import Meetups from "../meetups/Meetups";
 import Share from "../share/Share";
+import BigLoader from "../loaders/bigLoader/BigLoader";
 
 const Home = ({ setShowLoginPopup, searchQuery }) => {
   const dispatch = useDispatch();
@@ -80,7 +81,8 @@ const Home = ({ setShowLoginPopup, searchQuery }) => {
           <h1>{searchQuery ? "Search meetups" : "Available meetups"}</h1>
           {searchQuery && (
             <h4 style={{ width: "100%", textAlign: "center" }}>
-              {searchQuery}
+              {isMeetupLoading && "Searching for:"}
+              {!isMeetupLoading && "Results for:"} {searchQuery}
             </h4>
           )}
           {!searchQuery && (
@@ -150,7 +152,7 @@ const Home = ({ setShowLoginPopup, searchQuery }) => {
         </div>
         <div className="home__container--meetups">
           {isMeetupLoading ? (
-            <h3>Loading meetups...</h3>
+            <BigLoader />
           ) : meetups.length > 0 ? (
             meetups.map((meetup, index) => (
               <Meetups

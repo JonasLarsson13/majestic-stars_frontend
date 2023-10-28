@@ -1,4 +1,5 @@
 .app {
+    position: relative;
     width: 100%;
     min-height: 100vh;
     height: auto;
@@ -48,6 +49,7 @@
         }
     }
     button {
+        position: relative;
         width: 100%;
         padding: 0.5rem 0.8rem;
         font-size: 1rem;
@@ -82,17 +84,4 @@
         font-size: 0.8rem;
         font-weight: 400;
     }
-}
-
-.loader{
-    display: flex;
-    font-weight: 500;
-    font-size: xx-large;
-    color:grey;
-    margin-top: 10rem;
-    flex-direction: column;
-    text-align: center;
-    
-    
-    
 }

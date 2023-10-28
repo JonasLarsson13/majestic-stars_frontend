@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getMeetup } from "../../actions/meetupsActions";
 
 import "./SelectedMeetup.scss";
+import Ratings from "../ratings/Ratings";
 
 const SelectedMeetup = () => {
   const location = useLocation();
@@ -19,9 +20,12 @@ const SelectedMeetup = () => {
       <header>
         <h1>{isMeetupLoading ? "Loading..." : meetup.title}</h1>
         {!isMeetupLoading && (
-          <p>
-            Hosted by <b>{meetup.host}</b>
-          </p>
+          <>
+            <p>
+              Hosted by <b>{meetup.host}</b>
+            </p>
+            <Ratings meetup={meetup} ratings={meetup.ratings} />
+          </>
         )}
       </header>
       <main>

@@ -2,15 +2,17 @@ import React from "react";
 import { format } from "date-fns";
 import { GoShare } from "react-icons/go";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import "./Meetups.scss";
 
 const Meetups = (props) => {
   const { meetup, setShowLoginPopup, setShowSharePopup, setShareInfo } = props;
+  const { user } = useSelector((state) => state.auth);
 
   const onShareClick = () => {
     setShareInfo({
       description: meetup.title,
-      url: window.location.href,
+      url: `${window.location.href}meetup/${meetup._id}`,
     });
     setShowSharePopup(true);
   };
@@ -47,7 +49,11 @@ const Meetups = (props) => {
             {meetup.capacity - meetup.participants} slots left
           </span>
           <div>
-            <button onClick={() => setShowLoginPopup(true)}>Attend</button>
+            <button
+              onClick={!user.length ? () => setShowLoginPopup(true) : () => {}}
+            >
+              Attend
+            </button>
             <button onClick={onShareClick}>
               <GoShare />
             </button>

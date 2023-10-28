@@ -1,0 +1,30 @@
+.ratings {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 0.2rem;
+
+    &__stars {
+        display: flex;
+        gap: 0.1rem;
+        align-items: center;
+
+        .ratings__star {
+            color: rgb(222, 222, 222);
+    
+            &--active {
+                color: #f6d458;
+            }
+        }
+    }
+
+    &__info {
+        display: flex;
+        align-items: center;
+    }
+}
+
+.ratings-text {
+    font-size: 0.8rem;
+    color: rgb(114, 114, 114);
+}

@@ -15,7 +15,7 @@ import Footer from "./components/shared/footer/Footer";
 
 function App() {
   const dispatch = useDispatch();
-  const { isLoading } = useSelector((state) => state.auth);
+  const { isLoading, user } = useSelector((state) => state.auth);
   const [showLoginPopup, setShowLoginPopup] = useState(false);
   const [showSignupPopup, setShowSignupPopup] = useState(false);
   const [registerFormData, setRegisterFormData] = useState({
@@ -32,13 +32,6 @@ function App() {
   const [successMessage, setSuccessMessage] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [searchText, setSearchText] = useState("");
-
-  /* useEffect(() => {
-    // Simulate loading, and then set isLoading to false
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 4000);
-  }, []); */
 
   const changeView = (view) => {
     setErrorMessage("");
@@ -103,10 +96,6 @@ function App() {
 
   return (
     <div className="app">
-      {/* Display loader if isLoading is true */}
-      {/* {isLoading ? (
-        <div className="loader">Loading...</div>
-      ) : ( */}
       <Navbar
         setShowLoginPopup={setShowLoginPopup}
         setShowSignupPopup={setShowSignupPopup}
@@ -169,8 +158,8 @@ function App() {
           {successMessage && (
             <p className="success-message">{successMessage}</p>
           )}
-          <button onClick={handleLogin} disabled={isLoading}>
-            {isLoading ? "Loading..." : "Login"}
+          <button onClick={handleLogin} disabled={isLoading || user.length}>
+            {isLoading ? "Loading..." : user.length ? "Welcome" : "Login"}
           </button>
         </div>
       </Popup>
