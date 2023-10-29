@@ -23,6 +23,23 @@
             font-size: 1rem;
         }
 
+        button {
+            margin: 0 auto;
+            padding: 0.2rem 0.6rem;
+            border:none;
+            outline: none;
+            cursor: pointer;
+            border-radius: 4px;
+            color: rgb(65, 65, 65);
+            background: rgb(255, 233, 233);
+            transition: all 0.1s ease-in-out;
+
+            &:hover {
+                padding: 0.2rem 0.8rem;
+                background: rgb(255, 221, 221);
+            }
+        }
+
         &--filters {
             position: sticky;
             position: -webkit-sticky;

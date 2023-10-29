@@ -8,12 +8,19 @@ import Meetups from "../meetups/Meetups";
 import Share from "../share/Share";
 import BigLoader from "../loaders/bigLoader/BigLoader";
 
-const Home = ({ setShowLoginPopup, searchQuery }) => {
+const Home = ({
+  setShowLoginPopup,
+  searchQuery,
+  showSharePopup,
+  setShowSharePopup,
+  searchText,
+  setSearchQuery,
+  setSearchText,
+}) => {
   const dispatch = useDispatch();
   const { isMeetupLoading, meetups, meetupsFilters } = useSelector(
     (state) => state.meetup
   );
-  const [showSharePopup, setShowSharePopup] = useState(false);
   const [shareInfo, setShareInfo] = useState({
     description: "",
     url: "",
@@ -31,7 +38,9 @@ const Home = ({ setShowLoginPopup, searchQuery }) => {
   const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
-    dispatch(getMeetups());
+    if (searchText.length === 0) {
+      dispatch(getMeetups());
+    }
   }, []);
 
   useEffect(() => {
@@ -70,9 +79,17 @@ const Home = ({ setShowLoginPopup, searchQuery }) => {
       !filters.city &&
       !filters.category
     ) {
-      dispatch(getMeetups());
+      if (searchText.length === 0) {
+        dispatch(getMeetups());
+      }
     }
   }, [filters]);
+
+  const clearSearch = () => {
+    setSearchQuery("");
+    setSearchText("");
+    dispatch(getMeetups());
+  };
 
   return (
     <div className="home">
@@ -80,10 +97,17 @@ const Home = ({ setShowLoginPopup, searchQuery }) => {
         <div className="home__container--filters">
           <h1>{searchQuery ? "Search meetups" : "Available meetups"}</h1>
           {searchQuery && (
-            <h4 style={{ width: "100%", textAlign: "center" }}>
-              {isMeetupLoading && "Searching for:"}
-              {!isMeetupLoading && "Results for:"} {searchQuery}
-            </h4>
+            <>
+              <h4 style={{ width: "100%", textAlign: "center" }}>
+                {isMeetupLoading && "Searching for:"}
+                {!isMeetupLoading && "Results for:"} {searchQuery}
+              </h4>
+              {!isMeetupLoading && (
+                <button onClick={clearSearch} disabled={isMeetupLoading}>
+                  Clear search
+                </button>
+              )}
+            </>
           )}
           {!searchQuery && (
             <>

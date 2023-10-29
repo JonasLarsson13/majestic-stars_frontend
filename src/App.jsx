@@ -9,7 +9,7 @@ import Error from "./components/error/Error";
 import "./App.scss";
 import Popup from "./components/popup/Popup";
 
-import SelectedMeetup from "./components/selectedMeetup/selectedMeetup";
+import SelectedMeetup from "./components/selectedMeetup/SelectedMeetup";
 import { login, register } from "./actions/authActions";
 import Footer from "./components/shared/footer/Footer";
 
@@ -18,6 +18,7 @@ function App() {
   const { isLoading, user } = useSelector((state) => state.auth);
   const [showLoginPopup, setShowLoginPopup] = useState(false);
   const [showSignupPopup, setShowSignupPopup] = useState(false);
+  const [showSharePopup, setShowSharePopup] = useState(false);
   const [registerFormData, setRegisterFormData] = useState({
     email: "",
     repeatEmail: "",
@@ -110,11 +111,24 @@ function App() {
             <Home
               setShowLoginPopup={setShowLoginPopup}
               searchQuery={searchQuery}
+              showSharePopup={showSharePopup}
+              setShowSharePopup={setShowSharePopup}
+              searchText={searchText}
+              setSearchQuery={setSearchQuery}
+              setSearchText={setSearchText}
             />
           }
         />
         <Route path="/*" element={<Error />} />
-        <Route path="/meetup/:meetupId" element={<SelectedMeetup />} />
+        <Route
+          path="/meetup/:meetupId"
+          element={
+            <SelectedMeetup
+              showSharePopup={showSharePopup}
+              setShowSharePopup={setShowSharePopup}
+            />
+          }
+        />
       </Routes>
       <Popup
         showPopup={showLoginPopup}

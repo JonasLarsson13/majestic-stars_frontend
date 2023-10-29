@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import jwt_decode from "jwt-decode";
 import { FiSearch } from "react-icons/fi";
@@ -13,6 +14,8 @@ const Navbar = ({
   searchText,
   setSearchText,
 }) => {
+  const location = useLocation();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
   const { isMeetupLoading } = useSelector((state) => state.meetup);
@@ -23,6 +26,9 @@ const Navbar = ({
   };
 
   const searchMeetupsBtn = () => {
+    if (location.pathname !== "/") {
+      navigate("/");
+    }
     setSearchQuery(searchText);
     dispatch(searchMeetups(searchText));
   };

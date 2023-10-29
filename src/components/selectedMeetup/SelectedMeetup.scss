@@ -80,10 +80,85 @@
                     }
                 }
 
-                .selected--attendees {
-                    padding: 1rem 0 0.5rem 0;
-                    font-size: 1rem;
+                .selected__attend--section {
+                    padding: 1rem 0 0 0;
+                    display: flex;
+                    align-items: center;
+                    justify-content: flex-start;
+                    gap: 1rem;
+                    width: 100%;
+
+                    .selected--attendees {
+                        font-size: 1rem;
+                        min-width: 210px;
+                    }
                 }
+            }
+        }
+    }
+
+    hr {
+        width: 80%;
+        height: 1px;
+        background: #ececec;
+        margin: 2rem auto;
+        border: none;
+    }
+
+    &__bottom {
+        display: flex;
+        width: 100%;
+        max-width: 1200px;
+        justify-content: space-between;
+
+        &--left, &--center {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+
+            b {
+                font-size: 0.8rem;
+                font-weight: 500;
+                display: flex;
+                align-items: flex-end;
+                gap: 0.2rem;
+
+                svg {
+                    font-size: 1.2rem;;
+                }
+            }
+        }
+
+        &--right {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+
+            button {
+                padding: 0.8rem 1.6rem;
+                cursor: pointer;
+                border: 0;
+                outline: 0;
+                border-radius: 6px;
+                display: flex;
+                align-items: center;
+                gap: 0.4rem;
+                font-size: 1rem;
+                justify-content: center;
+
+                &:disabled {
+                    background: rgb(221, 48, 48) !important;
+                    cursor: default;
+                }
+            }
+
+            button:first-child {
+                background: #4CAF50;
+                color: white;
+            }
+
+            button:last-child {
+                border: 1px solid rgb(165, 165, 165);
             }
         }
     }
