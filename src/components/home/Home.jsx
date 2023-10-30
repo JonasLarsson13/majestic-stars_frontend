@@ -103,7 +103,11 @@ const Home = ({
                 {!isMeetupLoading && "Results for:"} {searchQuery}
               </h4>
               {!isMeetupLoading && (
-                <button onClick={clearSearch} disabled={isMeetupLoading}>
+                <button
+                  className="clear-search-btn"
+                  onClick={clearSearch}
+                  disabled={isMeetupLoading}
+                >
                   Clear search
                 </button>
               )}
@@ -188,7 +192,7 @@ const Home = ({
               />
             ))
           ) : (
-            <h3>No meetups found</h3>
+            <h3 className="no-results-text">No meetups found</h3>
           )}
         </div>
       </div>

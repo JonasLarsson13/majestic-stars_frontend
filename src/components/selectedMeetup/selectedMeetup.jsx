@@ -125,10 +125,12 @@ const SelectedMeetup = () => {
                     </>
                   )}
                 </button>
-                <button>
-                  <GoShare />
-                  Share
-                </button>
+                {currentDate < endDate && (
+                  <button>
+                    <GoShare />
+                    Share
+                  </button>
+                )}
               </div>
             </div>
           </div>
