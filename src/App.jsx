@@ -1,35 +1,270 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState } from "react";
+import { Routes, Route } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+
+import Navbar from "./components/shared/navbar/Navbar";
+import Home from "./components/home/Home";
+import Error from "./components/error/Error";
+
+import "./App.scss";
+import Popup from "./components/popup/Popup";
+
+import SelectedMeetup from "./components/selected-meetup/selectedMeetup";
+import { login, register } from "./actions/authActions";
+import Footer from "./components/shared/footer/Footer";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const dispatch = useDispatch();
+  const { isLoading, user } = useSelector((state) => state.auth);
+  const [showLoginPopup, setShowLoginPopup] = useState(false);
+  const [showSignupPopup, setShowSignupPopup] = useState(false);
+  const [showSharePopup, setShowSharePopup] = useState(false);
+  const [registerFormData, setRegisterFormData] = useState({
+    email: "",
+    repeatEmail: "",
+    password: "",
+    repeatPassword: "",
+  });
+  const [loginFormData, setLoginFormData] = useState({
+    email: "",
+    password: "",
+  });
+  const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchText, setSearchText] = useState("");
+
+  const changeView = (view) => {
+    setErrorMessage("");
+    setSuccessMessage("");
+    switch (view) {
+      case "login":
+        setShowSignupPopup(false);
+        setShowLoginPopup(true);
+        break;
+      case "signup":
+        setShowLoginPopup(false);
+        setShowSignupPopup(true);
+        break;
+      default:
+        break;
+    }
+  };
+
+  const handleRegister = () => {
+    setErrorMessage("");
+    setSuccessMessage("");
+    if (
+      !registerFormData.email ||
+      !registerFormData.repeatEmail ||
+      !registerFormData.password ||
+      !registerFormData.repeatPassword
+    ) {
+      setErrorMessage("Please fill in all fields");
+      return;
+    }
+    if (registerFormData.email !== registerFormData.repeatEmail) {
+      setErrorMessage("Emails don't match");
+      return;
+    }
+    if (registerFormData.password !== registerFormData.repeatPassword) {
+      setErrorMessage("Passwords don't match");
+      return;
+    }
+    if (registerFormData.password.length < 6) {
+      setErrorMessage("Password must be at least 6 characters long");
+      return;
+    }
+    dispatch(register(registerFormData, setSuccessMessage, setErrorMessage));
+  };
+
+  const handleLogin = () => {
+    setErrorMessage("");
+    setSuccessMessage("");
+    if (!loginFormData.email || !loginFormData.password) {
+      setErrorMessage("Please fill in all fields");
+      return;
+    }
+    dispatch(
+      login(
+        loginFormData,
+        setSuccessMessage,
+        setErrorMessage,
+        setShowLoginPopup
+      )
+    );
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
+    <div className="app">
+      <Navbar
+        setShowLoginPopup={setShowLoginPopup}
+        setShowSignupPopup={setShowSignupPopup}
+        setSearchQuery={setSearchQuery}
+        searchText={searchText}
+        setSearchText={setSearchText}
+      />
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <Home
+              setShowLoginPopup={setShowLoginPopup}
+              searchQuery={searchQuery}
+              showSharePopup={showSharePopup}
+              setShowSharePopup={setShowSharePopup}
+              searchText={searchText}
+              setSearchQuery={setSearchQuery}
+              setSearchText={setSearchText}
+            />
+          }
+        />
+        <Route path="/*" element={<Error />} />
+        <Route
+          path="/meetup/:meetupId"
+          element={
+            <SelectedMeetup
+              showSharePopup={showSharePopup}
+              setShowSharePopup={setShowSharePopup}
+            />
+          }
+        />
+      </Routes>
+      <Popup
+        showPopup={showLoginPopup}
+        setShowPopup={setShowLoginPopup}
+        width={460}
+      >
+        <h2 className="mini-logo">MSm</h2>
+        <h1>Login</h1>
         <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
+          Not a member yet?{" "}
+          <span onClick={() => changeView("signup")}>Sign up</span>
         </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+        <div className="popup__form">
+          <div className="form__group">
+            <label htmlFor="login-email">
+              Email<b>*</b>
+            </label>
+            <input
+              type="email"
+              id="login-email"
+              value={loginFormData.email}
+              onChange={(e) =>
+                setLoginFormData({ ...loginFormData, email: e.target.value })
+              }
+            />
+          </div>
+          <div className="form__group">
+            <label htmlFor="login-password">
+              Password<b>*</b>
+            </label>
+            <input
+              type="password"
+              id="login-password"
+              value={loginFormData.password}
+              onChange={(e) =>
+                setLoginFormData({ ...loginFormData, password: e.target.value })
+              }
+            />
+          </div>
+          {errorMessage && <p className="error-message">{errorMessage}</p>}
+          {successMessage && (
+            <p className="success-message">{successMessage}</p>
+          )}
+          <button onClick={handleLogin} disabled={isLoading || user.length}>
+            {isLoading ? "Loading..." : user.length ? "Welcome" : "Login"}
+          </button>
+        </div>
+      </Popup>
+      <Popup
+        showPopup={showSignupPopup}
+        setShowPopup={setShowSignupPopup}
+        width={460}
+      >
+        <h2 className="mini-logo">MSm</h2>
+        <h1>Sign up</h1>
+        <p>
+          Already a member?{" "}
+          <span onClick={() => changeView("login")}>Login</span>
+        </p>
+        <div className="popup__form">
+          <div className="form__group">
+            <label htmlFor="email">
+              Email<b>*</b>
+            </label>
+            <input
+              type="email"
+              id="email"
+              value={registerFormData.email}
+              onChange={(e) =>
+                setRegisterFormData({
+                  ...registerFormData,
+                  email: e.target.value,
+                })
+              }
+            />
+          </div>
+          <div className="form__group">
+            <label htmlFor="email">
+              Repeat Email<b>*</b>
+            </label>
+            <input
+              type="email"
+              id="repeat-email"
+              value={registerFormData.repeatEmail}
+              onChange={(e) =>
+                setRegisterFormData({
+                  ...registerFormData,
+                  repeatEmail: e.target.value,
+                })
+              }
+            />
+          </div>
+          <div className="form__group">
+            <label htmlFor="password">
+              Password<b>*</b>
+            </label>
+            <input
+              type="password"
+              id="password"
+              value={registerFormData.password}
+              onChange={(e) =>
+                setRegisterFormData({
+                  ...registerFormData,
+                  password: e.target.value,
+                })
+              }
+            />
+          </div>
+          <div className="form__group">
+            <label htmlFor="password">
+              Repeat Password<b>*</b>
+            </label>
+            <input
+              type="password"
+              id="repeat-password"
+              value={registerFormData.repeatPassword}
+              onChange={(e) =>
+                setRegisterFormData({
+                  ...registerFormData,
+                  repeatPassword: e.target.value,
+                })
+              }
+            />
+          </div>
+          {errorMessage && <p className="error-message">{errorMessage}</p>}
+          {successMessage && (
+            <p className="success-message">{successMessage}</p>
+          )}
+          <button onClick={handleRegister} disabled={isLoading}>
+            {isLoading ? "Loading..." : "Sign up"}
+          </button>
+        </div>
+      </Popup>
+      <Footer />
+    </div>
+  );
 }
 
-export default App
+export default App;
