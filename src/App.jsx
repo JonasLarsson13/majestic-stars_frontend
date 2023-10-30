@@ -9,7 +9,7 @@ import Error from "./components/error/Error";
 import "./App.scss";
 import Popup from "./components/popup/Popup";
 
-import SelectedMeetup from "./components/selectedMeetup/SelectedMeetup";
+import SelectedMeetup from "./components/selected-meetup/SelectedMeetup";
 import { login, register } from "./actions/authActions";
 import Footer from "./components/shared/footer/Footer";
 
