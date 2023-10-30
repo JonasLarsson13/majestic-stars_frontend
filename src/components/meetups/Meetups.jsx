@@ -45,8 +45,8 @@ const Meetups = (props) => {
         </div>
         <div className="meetup__info--bottom">
           <span>
-            {meetup.participants} attendees •{" "}
-            {meetup.capacity - meetup.participants} slots left
+            {meetup?.participants?.length} attendees •{" "}
+            {meetup.capacity - meetup?.participants?.length} slots left
           </span>
           <div>
             <button

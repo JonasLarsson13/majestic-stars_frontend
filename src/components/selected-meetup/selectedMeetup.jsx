@@ -85,7 +85,7 @@ const SelectedMeetup = () => {
               </div>
               <div className="selected__attend--section">
                 <b className="selected--attendees">
-                  Attendees {meetup.participants} / {meetup.capacity}
+                  Attendees {meetup?.participants?.length} / {meetup.capacity}
                 </b>
               </div>
             </div>
