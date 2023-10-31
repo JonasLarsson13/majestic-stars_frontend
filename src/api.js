@@ -4,9 +4,9 @@ const API = axios.create({ baseURL: import.meta.env.VITE_BASE_URL });
 
 API.interceptors.request.use((req) => {
   if (sessionStorage.getItem("auth")) {
-    req.headers.Authorization = `Bearer ${
-      JSON.parse(sessionStorage.getItem("auth")).token
-    }`;
+    req.headers.Authorization = `Bearer ${JSON.parse(
+      sessionStorage.getItem("auth")
+    )}`;
   }
 
   return req;
@@ -26,3 +26,5 @@ export const filterMeetupsAPI = (fromDate, toDate, city, category) => {
   if (category) url += `category=${category}&`;
   return API.get(url);
 };
+export const attendDeclineMeetupAPI = (meetupId) =>
+  API.put(`/meetups/${meetupId}`);

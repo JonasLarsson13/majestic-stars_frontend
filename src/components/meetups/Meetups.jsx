@@ -1,13 +1,47 @@
-import React from "react";
-import { format } from "date-fns";
+import React, { useEffect, useState } from "react";
+import jwt_decode from "jwt-decode";
+import { format, set } from "date-fns";
 import { GoShare } from "react-icons/go";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import "./Meetups.scss";
+import { attendDeclineMeetup } from "../../actions/meetupsActions";
 
 const Meetups = (props) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { meetup, setShowLoginPopup, setShowSharePopup, setShareInfo } = props;
   const { user } = useSelector((state) => state.auth);
+  const [isUserAttended, setIsUserAttended] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    if (user.length > 0) {
+      setIsLoading(true);
+      const decodedUser = jwt_decode(user);
+      const isUserRegistered = meetup.participants.findIndex(
+        (participant) => participant === decodedUser._id
+      );
+      if (isUserRegistered !== -1) {
+        setIsLoading(false);
+        return setIsUserAttended(true);
+      } else {
+        setIsLoading(false);
+        return setIsUserAttended(false);
+      }
+    }
+  }, [meetup]);
+
+  const handleAttend = () => {
+    dispatch(
+      attendDeclineMeetup(
+        meetup._id,
+        isUserAttended,
+        setIsUserAttended,
+        setIsLoading
+      )
+    );
+  };
 
   const onShareClick = () => {
     setShareInfo({
@@ -16,8 +50,6 @@ const Meetups = (props) => {
     });
     setShowSharePopup(true);
   };
-
-  const navigate = useNavigate(); // Use useNavigate to handle navigation
 
   const handleViewDetails = () => {
     navigate(`/meetup/${meetup._id}`);
@@ -51,9 +83,13 @@ const Meetups = (props) => {
           </span>
           <div>
             <button
-              onClick={!user.length ? () => setShowLoginPopup(true) : () => {}}
+              disabled={isLoading}
+              onClick={
+                !user.length ? () => setShowLoginPopup(true) : handleAttend
+              }
+              className={isUserAttended ? "decline" : null}
             >
-              Attend
+              {isLoading ? "Loading.." : isUserAttended ? "Decline" : "Attend"}
             </button>
             <button onClick={onShareClick}>
               <GoShare />

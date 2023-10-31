@@ -101,7 +101,7 @@
         width: 80%;
         height: 1px;
         background: #ececec;
-        margin: 2rem auto;
+        margin: 2.6rem auto;
         border: none;
     }
 
@@ -134,6 +134,11 @@
             flex-direction: column;
             gap: 0.6rem;
 
+            button:first-child {
+                background: #4CAF50;
+                color: white;
+            }
+
             button {
                 padding: 0.8rem 1.6rem;
                 cursor: pointer;
@@ -147,14 +152,21 @@
                 justify-content: center;
 
                 &:disabled {
-                    background: rgb(221, 48, 48) !important;
-                    cursor: default;
-                }
-            }
+                    background: rgb(173, 173, 173);
+                    cursor: not-allowed;
 
-            button:first-child {
-                background: #4CAF50;
-                color: white;
+                    &:hover {
+                        background: rgb(173, 173, 173);
+                    }
+                }
+
+                &.decline {
+                    background: #aa4747;
+
+                        &:hover {
+                            background: #b13939;
+                        }
+                }
             }
 
             button:last-child {

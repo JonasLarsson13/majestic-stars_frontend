@@ -1,24 +1,29 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getMeetup } from "../../actions/meetupsActions";
+import { attendDeclineMeetup, getMeetup } from "../../actions/meetupsActions";
 import { GoShare, GoLocation } from "react-icons/go";
 import { LuFlag, LuFlagOff } from "react-icons/lu";
 import { PiAddressBookLight } from "react-icons/pi";
 import { BsCalendarEvent } from "react-icons/bs";
+import jwt_decode from "jwt-decode";
 
 import "./SelectedMeetup.scss";
 import Ratings from "../ratings/Ratings";
 import Comments from "../comments/Comments";
+import { is } from "date-fns/locale";
 
 const SelectedMeetup = () => {
   const location = useLocation();
   const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
   const { meetup, isMeetupLoading } = useSelector((state) => state.meetup);
   const [currentDate, setCurrentDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [startDate, setStartDate] = useState(null);
   const [meetupEndDate, setMeetupEndDate] = useState(null);
+  const [isUserAttended, setIsUserAttended] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     dispatch(getMeetup(location.pathname.replace(/^\/meetup\//, "")));
@@ -38,6 +43,34 @@ const SelectedMeetup = () => {
       setMeetupEndDate(originalEndDate);
     }
   }, [meetup]);
+
+  useEffect(() => {
+    if (user?.length > 0) {
+      setIsLoading(true);
+      const decodedUser = jwt_decode(user);
+      const isUserRegistered = meetup?.participants?.findIndex(
+        (participant) => participant === decodedUser._id
+      );
+      if (isUserRegistered !== -1) {
+        setIsLoading(false);
+        return setIsUserAttended(true);
+      } else {
+        setIsLoading(false);
+        return setIsUserAttended(false);
+      }
+    }
+  }, [meetup]);
+
+  const handleAttend = () => {
+    dispatch(
+      attendDeclineMeetup(
+        meetup._id,
+        isUserAttended,
+        setIsUserAttended,
+        setIsLoading
+      )
+    );
+  };
 
   const formatDate = (date) => {
     if (date instanceof Date) {
@@ -116,9 +149,22 @@ const SelectedMeetup = () => {
                 </p>
               </div>
               <div className="selected__bottom--right">
-                <button disabled={isMeetupLoading || currentDate > endDate}>
+                <button
+                  disabled={
+                    isMeetupLoading || currentDate > endDate || isLoading
+                  }
+                  onClick={handleAttend}
+                  className={isUserAttended ? "decline" : null}
+                >
                   {currentDate > endDate ? (
                     "Ended"
+                  ) : isLoading ? (
+                    "Loading.."
+                  ) : isUserAttended ? (
+                    <>
+                      <LuFlagOff />
+                      Decline
+                    </>
                   ) : (
                     <>
                       <LuFlag />
@@ -134,10 +180,10 @@ const SelectedMeetup = () => {
                 )}
               </div>
             </div>
+            <hr />
             <div className="selected__bottom__comment">
-                <Comments/>
-
-              </div>
+              <Comments />
+            </div>
           </div>
         )}
       </main>

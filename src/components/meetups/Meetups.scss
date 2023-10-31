@@ -93,6 +93,19 @@
                     &:hover {
                         background: #00b42a;
                     }
+
+                    &.decline {
+                        background: #aa4747;
+
+                        &:hover {
+                            background: #b13939;
+                        }
+                    }
+
+                    &:disabled {
+                        background: rgb(162, 162, 162);
+                        cursor: not-allowed;
+                    }
                 }
             }
         }

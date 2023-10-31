@@ -14,8 +14,8 @@ export const login =
           setShowLoginPopup(false);
           setSuccessMessage("");
         }, 1000);
+        dispatch({ type: "LOGIN_USER", payload: data });
       }
-      dispatch({ type: "LOGIN_USER", payload: data });
       dispatch({ type: "END_LOADING" });
     } catch (error) {
       console.log(error);

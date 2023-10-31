@@ -49,3 +49,18 @@ export const filterMeetups = (filters) => async (dispatch) => {
     console.log(error);
   }
 };
+
+export const attendDeclineMeetup =
+  (meetupId, isUserAttended, setIsUserAttended, setIsLoading) => async () => {
+    try {
+      setIsLoading(true);
+      const { data } = await api.attendDeclineMeetupAPI(meetupId);
+      if (data?.success) {
+        setIsUserAttended(!isUserAttended);
+      }
+      setIsLoading(false);
+    } catch (error) {
+      setIsLoading(false);
+      console.log(error);
+    }
+  };
