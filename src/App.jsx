@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import UserProfile from "./components/profile/Profile";
 
 import Navbar from "./components/shared/navbar/Navbar";
 import Home from "./components/home/Home";
@@ -75,7 +76,15 @@ function App() {
       setErrorMessage("Password must be at least 6 characters long");
       return;
     }
-    dispatch(register(registerFormData, setSuccessMessage, setErrorMessage));
+    dispatch(
+      register(
+        registerFormData,
+        setSuccessMessage,
+        setErrorMessage,
+        setShowLoginPopup,
+        setShowSignupPopup
+      )
+    );
   };
 
   const handleLogin = () => {
@@ -129,6 +138,7 @@ function App() {
             />
           }
         />
+        <Route path="/profile" element={<UserProfile />} />
       </Routes>
       <Popup
         showPopup={showLoginPopup}

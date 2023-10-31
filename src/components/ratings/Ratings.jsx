@@ -1,24 +1,22 @@
 import React from "react";
 import { AiFillStar } from "react-icons/ai";
 
+
 import "./Ratings.scss";
 
 const Ratings = (props) => {
-  const { ratings = [], meetup } = props;
+  const { ratings = [], meetup} = props;
 
-  // Calculate the middle value of the ratings array
-  const getMiddleValue = () => {
-    const numericRatings = ratings
-      .map((rating) => parseInt(rating, 10))
-      .filter((rating) => !isNaN(rating));
-
-    if (numericRatings.length === 0) {
+  const getAverageRating = () => {
+    if (ratings.length === 0) {
       return 0;
     }
 
-    const sortedRatings = numericRatings.sort((a, b) => a - b);
-    const middleIndex = Math.floor(sortedRatings.length / 2);
-    return sortedRatings[middleIndex];
+    const totalRating = ratings.reduce(
+      (acc, rating) => acc + parseFloat(rating),
+      0
+    );
+    return Math.round((totalRating / ratings.length).toFixed(1));
   };
 
   return (
@@ -30,14 +28,15 @@ const Ratings = (props) => {
             <AiFillStar
               key={index}
               className={`ratings__star ${
-                index < getMiddleValue() ? "ratings__star--active" : ""
+                index < getAverageRating() ? "ratings__star--active" : ""
               }`}
             />
           ))}
       </div>
       <div className="ratings__info">
         <span className="ratings-text">
-          ({ratings.length} ratings out of {meetup.participants} participants)
+          ({ratings.length} ratings out of {meetup?.participants?.length}{" "}
+          participants)
         </span>
       </div>
     </div>

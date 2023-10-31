@@ -39,14 +39,15 @@ const Meetups = (props) => {
           </h4>
           <h3 onClick={handleViewDetails}>{meetup.title}</h3>
           <p onClick={handleViewDetails}>
-            {meetup.description.substring(0, 180).replace(/<br\s*\/>/g, "")} ...
+            {meetup?.description?.substring(0, 180).replace(/<br\s*\/>/g, "")}{" "}
+            ...
           </p>
           <span>{meetup.location}</span>
         </div>
         <div className="meetup__info--bottom">
           <span>
-            {meetup.participants} attendees •{" "}
-            {meetup.capacity - meetup.participants} slots left
+            {meetup?.participants?.length} attendees •{" "}
+            {meetup.capacity - meetup?.participants?.length} slots left
           </span>
           <div>
             <button

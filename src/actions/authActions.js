@@ -23,7 +23,14 @@ export const login =
   };
 
 export const register =
-  (formData, setSuccessMessage, setErrorMessage) => async (dispatch) => {
+  (
+    formData,
+    setSuccessMessage,
+    setErrorMessage,
+    setShowLoginPopup,
+    setShowSignupPopup
+  ) =>
+  async (dispatch) => {
     try {
       dispatch({ type: "START_LOADING" });
       const { data } = await api.registerUser(formData);
@@ -31,8 +38,12 @@ export const register =
         setErrorMessage("Email already exists");
       } else {
         setSuccessMessage("User registered successfully");
+        setShowLoginPopup(true);
+        setShowSignupPopup(false);
+        setTimeout(() => {
+          setSuccessMessage("");
+        }, 2000);
       }
-      dispatch({ type: "LOGIN_USER", payload: data });
       dispatch({ type: "END_LOADING" });
     } catch (error) {
       console.log(error);
