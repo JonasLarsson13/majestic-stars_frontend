@@ -75,7 +75,15 @@ function App() {
       setErrorMessage("Password must be at least 6 characters long");
       return;
     }
-    dispatch(register(registerFormData, setSuccessMessage, setErrorMessage));
+    dispatch(
+      register(
+        registerFormData,
+        setSuccessMessage,
+        setErrorMessage,
+        setShowLoginPopup,
+        setShowSignupPopup
+      )
+    );
   };
 
   const handleLogin = () => {
