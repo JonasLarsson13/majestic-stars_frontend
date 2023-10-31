@@ -1,0 +1,65 @@
+.commentForm{
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+
+
+    &__input{
+        padding: 0.8rem 1.6rem;
+        cursor: pointer;
+        border: 0;
+        outline: 0;
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        font-size: 1rem;
+        justify-content: center;
+    }
+
+    &__textArea{
+        padding: 0.8rem 1.6rem;
+        cursor: pointer;
+        border: 0;
+        outline: 0;
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        font-size: 1rem;
+        justify-content: center;
+    }
+
+    &__btn{
+        padding: 0.8rem 1.6rem;
+        cursor: pointer;
+        border: 0;
+        outline: 0;
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        font-size: 1rem;
+        justify-content: center;
+        background: #4CAF50;
+        color: white;
+            
+        
+      
+    
+        &:disabled {
+            background: rgb(221, 48, 48) !important;
+            cursor: default;
+        }
+    
+    }
+}
+
+
+
+
+
+
+
+
+

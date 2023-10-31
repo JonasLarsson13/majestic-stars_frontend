@@ -1,12 +1,11 @@
 import React from "react";
 import { AiFillStar } from "react-icons/ai";
 
-import Comments from "../comments/Comments";
 
 import "./Ratings.scss";
 
 const Ratings = (props) => {
-  const { ratings = [], meetup, comments } = props;
+  const { ratings = [], meetup} = props;
 
   const getAverageRating = () => {
     if (ratings.length === 0) {

@@ -9,6 +9,7 @@ import { BsCalendarEvent } from "react-icons/bs";
 
 import "./SelectedMeetup.scss";
 import Ratings from "../ratings/Ratings";
+import Comments from "../comments/Comments";
 
 const SelectedMeetup = () => {
   const location = useLocation();
@@ -133,6 +134,10 @@ const SelectedMeetup = () => {
                 )}
               </div>
             </div>
+            <div className="selected__bottom__comment">
+                <Comments/>
+
+              </div>
           </div>
         )}
       </main>

@@ -1,20 +1,30 @@
-import React from "react";
-//import "./Comments.scss";
+import React, {useState} from "react";
+import "./Comments.scss";
+import CommentForm from "../commentForm/CommentForm";
 
 const Comments = (props) => {
   const { comments = [] } = props;
 
+  const [commentList, setCommentList] = useState(comments);
+
+  const addComment = (newComment) => {
+    setCommentList([...commentList, newComment]);
+  };
+
+
   return (
     <div className="comments">
-      <h2 className="comments__title">Comments</h2>
+      <h3 className="comments__title">Comments</h3>
       <ul className="comments__list">
-        {comments.map((comment, index) => (
+        {commentList.map((comment, index) => (
           <li key={index} className="comments__item">
-            <div className="comments__author">{comment.author}</div>
+            <div className="comments__author">By: {comment.author}</div>
             <div className="comments__text">{comment.text}</div>
           </li>
         ))}
       </ul>
+      
+      <CommentForm addComment={addComment} />
     </div>
   );
 };
