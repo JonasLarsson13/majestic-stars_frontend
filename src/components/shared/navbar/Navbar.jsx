@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate} from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import jwt_decode from "jwt-decode";
 import { FiSearch } from "react-icons/fi";
 import { getMeetups, searchMeetups } from "../../../actions/meetupsActions";
+
 
 import "./Navbar.scss";
 
@@ -20,6 +21,11 @@ const Navbar = ({
   const { user } = useSelector((state) => state.auth);
   const { isMeetupLoading } = useSelector((state) => state.meetup);
   const [usernameUppercase, setUsernameUppercase] = useState("Profile");
+
+  const handleViewProfile = () => {
+    navigate(`/profile`);
+  };
+
 
   const logout = () => {
     dispatch({ type: "LOGOUT_USER" });
@@ -70,7 +76,7 @@ const Navbar = ({
       </div>
       {user.length > 0 ? (
         <ul className="navbar__right">
-          <li>{usernameUppercase}</li>
+          <li onClick={handleViewProfile}>{usernameUppercase}</li>
           <li onClick={logout}>Logout</li>
         </ul>
       ) : (

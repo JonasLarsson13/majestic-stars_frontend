@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import UserProfile from "./components/profile/Profile";
 
 import Navbar from "./components/shared/navbar/Navbar";
 import Home from "./components/home/Home";
@@ -129,6 +130,7 @@ function App() {
             />
           }
         />
+        <Route path="/profile" element={<UserProfile />} />
       </Routes>
       <Popup
         showPopup={showLoginPopup}
