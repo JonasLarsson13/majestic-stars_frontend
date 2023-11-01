@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import jwt_decode from "jwt-decode";
-import { format, set } from "date-fns";
+import { format } from "date-fns";
 import { GoShare } from "react-icons/go";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,22 +10,33 @@ import { attendDeclineMeetup } from "../../actions/meetupsActions";
 const Meetups = (props) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { meetup, setShowLoginPopup, setShowSharePopup, setShareInfo } = props;
+  const {
+    meetup,
+    setShowLoginPopup,
+    setShowSharePopup,
+    setShareInfo,
+    isProfile,
+  } = props;
   const { user } = useSelector((state) => state.auth);
   const [isUserAttended, setIsUserAttended] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [currentDate, setCurrentDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
+  const [attendeeCount, setAttendeeCount] = useState(
+    meetup?.participants.length
+  );
+
+  const currentTime = new Date(meetup?.startDate);
 
   useEffect(() => {
     if (meetup) {
       setCurrentDate(new Date());
-      setEndDate(new Date(meetup.endDate));
+      setEndDate(new Date(meetup?.endDate));
     }
     if (user.length > 0) {
       setIsLoading(true);
       const decodedUser = jwt_decode(user);
-      const isUserRegistered = meetup.participants.findIndex(
+      const isUserRegistered = meetup?.participants.findIndex(
         (participant) => participant === decodedUser._id
       );
       if (isUserRegistered !== -1) {
@@ -47,6 +58,11 @@ const Meetups = (props) => {
         setIsLoading
       )
     );
+    if (!isUserAttended) {
+      setAttendeeCount(attendeeCount + 1);
+    } else {
+      setAttendeeCount(attendeeCount - 1);
+    }
   };
 
   const onShareClick = () => {
@@ -61,11 +77,9 @@ const Meetups = (props) => {
     navigate(`/meetup/${meetup._id}`);
   };
 
-  const currentTime = new Date(meetup.startDate);
-
   return (
     <div className="meetup">
-      <img src={meetup.image} alt={meetup.title} />
+      <img src={meetup?.image} alt={meetup?.title} />
       <div className="meetup__info">
         <div className="meetup__info--top">
           <h4>
@@ -77,20 +91,20 @@ const Meetups = (props) => {
             {currentDate > endDate ? (
               <b>This meetups has ended</b>
             ) : (
-              meetup.city
+              meetup?.city
             )}
           </h4>
-          <h3 onClick={handleViewDetails}>{meetup.title}</h3>
+          <h3 onClick={handleViewDetails}>{meetup?.title}</h3>
           <p onClick={handleViewDetails}>
             {meetup?.description?.substring(0, 180).replace(/<br\s*\/>/g, "")}{" "}
             ...
           </p>
-          <span>{meetup.location}</span>
+          <span>{meetup?.location}</span>
         </div>
         <div className="meetup__info--bottom">
           <span>
-            {meetup?.participants?.length} attendees •{" "}
-            {meetup.capacity - meetup?.participants?.length} slots left
+            {attendeeCount} attendees • {meetup?.capacity - attendeeCount} slots
+            left
           </span>
           <div>
             <button
@@ -107,9 +121,11 @@ const Meetups = (props) => {
             >
               {isLoading ? "Loading.." : isUserAttended ? "Decline" : "Attend"}
             </button>
-            <button onClick={onShareClick}>
-              <GoShare />
-            </button>
+            {!isProfile && (
+              <button onClick={onShareClick}>
+                <GoShare />
+              </button>
+            )}
           </div>
         </div>
       </div>

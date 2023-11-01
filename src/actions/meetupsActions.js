@@ -57,6 +57,8 @@ export const attendDeclineMeetup =
       const { data } = await api.attendDeclineMeetupAPI(meetupId);
       if (data?.success) {
         setIsUserAttended(!isUserAttended);
+      } else {
+        alert(data?.message);
       }
       setIsLoading(false);
     } catch (error) {
