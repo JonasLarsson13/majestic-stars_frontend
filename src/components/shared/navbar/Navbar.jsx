@@ -74,7 +74,9 @@ const Navbar = ({
       </div>
       {user.length > 0 ? (
         <ul className="navbar__right">
-          <li onClick={handleViewProfile}>{usernameUppercase}</li>
+          <li onClick={handleViewProfile}>
+            {usernameUppercase.replace(/[.-]/g, " ")}
+          </li>
           <li onClick={logout}>Logout</li>
         </ul>
       ) : (

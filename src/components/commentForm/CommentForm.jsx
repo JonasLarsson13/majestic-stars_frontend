@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import "./CommentForm.scss";
 
-const CommentForm = ({ addComment, setNewComment, newComment }) => {
+const CommentForm = ({ addComment, setNewComment, newComment, isLoading }) => {
   const handleTextChange = (e) => {
     setNewComment({ ...newComment, comment: e.target.value });
   };
@@ -22,8 +22,8 @@ const CommentForm = ({ addComment, setNewComment, newComment }) => {
         value={newComment.comment}
         onChange={handleTextChange}
       />
-      <button className="commentForm__btn" type="submit">
-        Add Comment
+      <button disabled={isLoading} className="commentForm__btn" type="submit">
+        {isLoading ? "Loading..." : "Rate and review"}
       </button>
     </form>
   );

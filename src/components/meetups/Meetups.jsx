@@ -14,8 +14,14 @@ const Meetups = (props) => {
   const { user } = useSelector((state) => state.auth);
   const [isUserAttended, setIsUserAttended] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [currentDate, setCurrentDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
 
   useEffect(() => {
+    if (meetup) {
+      setCurrentDate(new Date());
+      setEndDate(new Date(meetup.endDate));
+    }
     if (user.length > 0) {
       setIsLoading(true);
       const decodedUser = jwt_decode(user);
@@ -67,7 +73,12 @@ const Meetups = (props) => {
               currentTime.setHours(currentTime.getHours() - 1),
               "do MMMM yyyy, HH:mm"
             )}{" "}
-            • {meetup.city}
+            •{" "}
+            {currentDate > endDate ? (
+              <b>This meetups has ended</b>
+            ) : (
+              meetup.city
+            )}
           </h4>
           <h3 onClick={handleViewDetails}>{meetup.title}</h3>
           <p onClick={handleViewDetails}>
@@ -83,11 +94,16 @@ const Meetups = (props) => {
           </span>
           <div>
             <button
-              disabled={isLoading}
+              disabled={isLoading || currentDate > endDate}
               onClick={
                 !user.length ? () => setShowLoginPopup(true) : handleAttend
               }
               className={isUserAttended ? "decline" : null}
+              style={
+                currentDate > endDate
+                  ? { display: "none", color: "green" }
+                  : null
+              }
             >
               {isLoading ? "Loading.." : isUserAttended ? "Decline" : "Attend"}
             </button>

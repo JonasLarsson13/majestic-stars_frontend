@@ -11,9 +11,9 @@ import jwt_decode from "jwt-decode";
 import "./SelectedMeetup.scss";
 import Ratings from "../ratings/Ratings";
 import Comments from "../comments/Comments";
-import { is } from "date-fns/locale";
 
-const SelectedMeetup = () => {
+const SelectedMeetup = (props) => {
+  const { setShowLoginPopup, setShowSharePopup, setShareInfo } = props;
   const location = useLocation();
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
@@ -85,6 +85,14 @@ const SelectedMeetup = () => {
     return "";
   };
 
+  const onShareClick = () => {
+    setShareInfo({
+      description: meetup.title,
+      url: `${window.location.href}meetup/${meetup._id}`,
+    });
+    setShowSharePopup(true);
+  };
+
   return (
     <div className="selected">
       <header>
@@ -153,8 +161,12 @@ const SelectedMeetup = () => {
                   disabled={
                     isMeetupLoading || currentDate > endDate || isLoading
                   }
-                  onClick={handleAttend}
-                  className={isUserAttended ? "decline" : null}
+                  onClick={
+                    !user.length ? () => setShowLoginPopup(true) : handleAttend
+                  }
+                  className={
+                    isUserAttended && currentDate < endDate ? "decline" : null
+                  }
                 >
                   {currentDate > endDate ? (
                     "Ended"
@@ -173,17 +185,26 @@ const SelectedMeetup = () => {
                   )}
                 </button>
                 {currentDate < endDate && (
-                  <button>
+                  <button onClick={onShareClick}>
                     <GoShare />
                     Share
                   </button>
                 )}
               </div>
             </div>
-            <hr />
-            <div className="selected__bottom__comment">
-              <Comments />
-            </div>
+            {endDate < currentDate && (
+              <>
+                <hr />
+                <div className="selected__bottom__comment">
+                  <Comments
+                    isUserAttended={isUserAttended}
+                    comments={meetup.comments}
+                    ratings={meetup.ratings}
+                    meetupId={meetup._id}
+                  />
+                </div>
+              </>
+            )}
           </div>
         )}
       </main>

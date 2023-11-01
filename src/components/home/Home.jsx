@@ -1,30 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { filterMeetups, getMeetups } from "../../actions/meetupsActions";
-import Popup from "../popup/Popup";
 
 import "./Home.scss";
 import Meetups from "../meetups/Meetups";
-import Share from "../share/Share";
 import BigLoader from "../loaders/bigLoader/BigLoader";
 
 const Home = ({
   setShowLoginPopup,
   searchQuery,
-  showSharePopup,
   setShowSharePopup,
   searchText,
   setSearchQuery,
   setSearchText,
+  setShareInfo,
 }) => {
   const dispatch = useDispatch();
   const { isMeetupLoading, meetups, meetupsFilters } = useSelector(
     (state) => state.meetup
   );
-  const [shareInfo, setShareInfo] = useState({
-    description: "",
-    url: "",
-  });
   const [filters, setFilters] = useState({
     fromDate: "",
     toDate: "",
@@ -196,14 +190,6 @@ const Home = ({
           )}
         </div>
       </div>
-
-      <Popup
-        showPopup={showSharePopup}
-        setShowPopup={setShowSharePopup}
-        width={360}
-      >
-        <Share description={shareInfo.description} url={shareInfo.url} />
-      </Popup>
     </div>
   );
 };

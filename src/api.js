@@ -28,3 +28,5 @@ export const filterMeetupsAPI = (fromDate, toDate, city, category) => {
 };
 export const attendDeclineMeetupAPI = (meetupId) =>
   API.put(`/meetups/${meetupId}`);
+export const commentAndRateMeetupAPI = (meetupId, formData) =>
+  API.put(`/meetups/${meetupId}/comment`, formData);

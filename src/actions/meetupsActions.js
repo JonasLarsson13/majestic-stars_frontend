@@ -64,3 +64,19 @@ export const attendDeclineMeetup =
       console.log(error);
     }
   };
+
+export const commentAndRateMeetup =
+  (meetupId, formData, setIsLoading, addCommentToList) => async () => {
+    console.log(formData);
+    try {
+      setIsLoading(true);
+      const { data } = await api.commentAndRateMeetupAPI(meetupId, formData);
+      if (data?.success) {
+        addCommentToList();
+      }
+      setIsLoading(false);
+    } catch (error) {
+      setIsLoading(false);
+      console.log(error);
+    }
+  };
