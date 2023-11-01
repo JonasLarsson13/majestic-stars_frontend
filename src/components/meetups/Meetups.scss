@@ -30,6 +30,12 @@
             h4 {
                 font-size: 0.8rem;
                 font-weight: 500;
+
+                b {
+                    font-weight: 500;
+                    font-size: 0.8rem;
+                    color: red;
+                }
             }
             h3 {
                 font-size: 1.2rem;
@@ -92,6 +98,19 @@
 
                     &:hover {
                         background: #00b42a;
+                    }
+
+                    &.decline {
+                        background: #aa4747;
+
+                        &:hover {
+                            background: #b13939;
+                        }
+                    }
+
+                    &:disabled {
+                        background: rgb(162, 162, 162);
+                        cursor: not-allowed;
                     }
                 }
             }

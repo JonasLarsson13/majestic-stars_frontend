@@ -6,6 +6,7 @@ import UserProfile from "./components/profile/Profile";
 import Navbar from "./components/shared/navbar/Navbar";
 import Home from "./components/home/Home";
 import Error from "./components/error/Error";
+import Share from "./components/share/Share";
 
 import "./App.scss";
 import Popup from "./components/popup/Popup";
@@ -34,6 +35,10 @@ function App() {
   const [successMessage, setSuccessMessage] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [searchText, setSearchText] = useState("");
+  const [shareInfo, setShareInfo] = useState({
+    description: "",
+    url: "",
+  });
 
   const changeView = (view) => {
     setErrorMessage("");
@@ -125,6 +130,7 @@ function App() {
               searchText={searchText}
               setSearchQuery={setSearchQuery}
               setSearchText={setSearchText}
+              setShareInfo={setShareInfo}
             />
           }
         />
@@ -135,6 +141,8 @@ function App() {
             <SelectedMeetup
               showSharePopup={showSharePopup}
               setShowSharePopup={setShowSharePopup}
+              setShareInfo={setShareInfo}
+              setShowLoginPopup={setShowLoginPopup}
             />
           }
         />
@@ -271,6 +279,13 @@ function App() {
             {isLoading ? "Loading..." : "Sign up"}
           </button>
         </div>
+      </Popup>
+      <Popup
+        showPopup={showSharePopup}
+        setShowPopup={setShowSharePopup}
+        width={360}
+      >
+        <Share description={shareInfo.description} url={shareInfo.url} />
       </Popup>
       <Footer />
     </div>

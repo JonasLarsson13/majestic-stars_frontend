@@ -1,0 +1,25 @@
+.rate-component {
+        display: flex;
+        font-size: 1.4rem;
+        gap: 0.1rem;
+        align-items: center;
+        padding: 0.4rem;
+        cursor: pointer;
+
+        .ratings__star {
+            color: rgb(210, 210, 210);
+            transition: all 0.1s ease-in-out;
+    
+            &--active {
+                color: #f6d458;
+
+                &:hover {
+                    transform: scale(1.1);
+                }
+            }
+
+            &:hover {
+                transform: scale(1.1);
+            }
+        }
+}

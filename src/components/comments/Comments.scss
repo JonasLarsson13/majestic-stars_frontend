@@ -1,7 +1,7 @@
 .comments{
     display: flex;
     flex-direction: column;
-    margin-top: 5rem;
+    margin-top: 3rem;
     
 
  &__title{
@@ -25,12 +25,29 @@
     border-radius: 6px;
     padding: 1rem;
     background-color: white;
+
+    span {
+      display: flex;
+      align-items: center;
+      font-size: 0.8rem;
+      color: rgb(210, 210, 210);
+
+      .ratings__star {
+         color: rgb(210, 210, 210);
+         transition: all 0.1s ease-in-out;
+   
+         &--active {
+             color: #f6d458;
+         }
+    }
+  }
     
  }
 
  &__author{
    font-weight: 500;
-    
+    display: flex;
+    gap: 0.5rem;
  }
 
 }
