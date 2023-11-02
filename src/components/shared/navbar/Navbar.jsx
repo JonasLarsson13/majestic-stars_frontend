@@ -20,6 +20,7 @@ const Navbar = ({
   const { user } = useSelector((state) => state.auth);
   const { isMeetupLoading } = useSelector((state) => state.meetup);
   const [usernameUppercase, setUsernameUppercase] = useState("Profile");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleViewProfile = () => {
     navigate(`/profile`);
@@ -34,7 +35,7 @@ const Navbar = ({
       navigate("/");
     }
     setSearchQuery(searchText);
-    dispatch(searchMeetups(searchText));
+    dispatch(searchMeetups(searchText, setIsLoading));
   };
 
   useEffect(() => {
@@ -47,7 +48,7 @@ const Navbar = ({
   }, [user]);
 
   useEffect(() => {
-    if (searchText === "") {
+    if (searchText === "" && location.pathname !== "/profile") {
       setSearchQuery("");
       dispatch(getMeetups());
     }
