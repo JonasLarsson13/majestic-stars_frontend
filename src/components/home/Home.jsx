@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { filterMeetups, getMeetups } from "../../actions/meetupsActions";
+import { useLocation } from "react-router-dom";
 
 import "./Home.scss";
 import Meetups from "../meetups/Meetups";
@@ -15,6 +16,7 @@ const Home = ({
   setSearchText,
   setShareInfo,
 }) => {
+  const location = useLocation();
   const dispatch = useDispatch();
   const { isMeetupLoading, meetups, meetupsFilters } = useSelector(
     (state) => state.meetup
@@ -32,7 +34,7 @@ const Home = ({
   const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
-    if (searchText.length === 0) {
+    if (searchText.length === 0 && location.pathname !== "/profile") {
       dispatch(getMeetups());
     }
   }, []);
@@ -73,7 +75,7 @@ const Home = ({
       !filters.city &&
       !filters.category
     ) {
-      if (searchText.length === 0) {
+      if (searchText.length === 0 && location.pathname !== "/profile") {
         dispatch(getMeetups());
       }
     }

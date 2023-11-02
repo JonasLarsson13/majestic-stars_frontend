@@ -58,10 +58,13 @@ const Meetups = (props) => {
         setIsLoading
       )
     );
-    if (!isUserAttended) {
-      setAttendeeCount(attendeeCount + 1);
-    } else {
-      setAttendeeCount(attendeeCount - 1);
+    if (meetup?.capacity > 0) {
+      if (!isUserAttended) {
+        setAttendeeCount(attendeeCount + 1);
+        console.log(meetup?.capacity);
+      } else {
+        setAttendeeCount(attendeeCount - 1);
+      }
     }
   };
 
@@ -103,8 +106,8 @@ const Meetups = (props) => {
         </div>
         <div className="meetup__info--bottom">
           <span>
-            {attendeeCount} attendees • {meetup?.capacity - attendeeCount} slots
-            left
+            Hosted by: {meetup.host} • {attendeeCount} attendees •{" "}
+            {meetup?.capacity - attendeeCount} slots left
           </span>
           <div>
             <button
